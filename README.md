@@ -88,9 +88,3 @@ List endpoints return `{ items, pagination: { page, limit, total, pages } }`.
 3. Set env vars: `MONGODB_URI`, `JWT_SECRET`, `NODE_ENV=production`, `CLIENT_URL=<Vercel URL>`.
 4. Open `<Render URL>/api/health`. The free plan sleeps when idle, so the first request can take 30 to 60 seconds.
 
-## Visual Evidence
-
-API screenshots (health check, a Postman login and list call, Atlas collections) go in `docs/screenshots/`. UI screenshots for desktop and mobile are in the frontend repo README.
-
-![Atlas collections](docs/screenshots/atlas-collections.png)
-![Postman login](docs/screenshots/postman-login.png)
