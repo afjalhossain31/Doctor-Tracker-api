@@ -1,27 +1,61 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
+import { connectDB } from './config/db.js'; // DB connection import korun
 import authRoutes from './routes/auth.js';
 import doctorRoutes from './routes/doctors.js';
 import patientRoutes from './routes/patients.js';
 import dashboardRoutes from './routes/dashboard.js';
-import { protect, adminOnly, notFound, errorHandler } from './middleware/index.js';
+import {
+    protect,
+    adminOnly,
+    notFound,
+    errorHandler
+} from './middleware/index.js';
 
 const app = express();
+
+// Vercel / Serverless-er jonno database connection middleware
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        console.error('Database connection failed in middleware:', error);
+        res.status(500).json({ message: 'Database connection failed' });
+    }
+});
+
 const origins = (process.env.CLIENT_URL || 'http://localhost:3000').split(',').map((s) => s.trim());
 
 app.set('trust proxy', 1);
 app.use(helmet());
-app.use(cors({ origin: origins, credentials: true }));
-app.use(express.json({ limit: '100kb' }));
+app.use(cors({
+    origin: origins,
+    credentials: true
+}));
+app.use(express.json({
+    limit: '100kb'
+}));
 if (process.env.NODE_ENV !== 'test') app.use(morgan('dev'));
 
-app.get('/', (_req, res) => res.json({ name: 'Doctor Tracker API', status: 'ok' }));
-app.get('/api/health', (_req, res) => res.json({ status: 'ok', time: new Date().toISOString() }));
+app.get('/', (_req, res) => res.json({
+    name: 'Doctor Tracker API',
+    status: 'ok'
+}));
+app.get('/api/health', (_req, res) => res.json({
+    status: 'ok',
+    time: new Date().toISOString()
+}));
 
-app.use('/api/auth/login', rateLimit({ windowMs: 15 * 60 * 1000, max: 30, standardHeaders: true }));
+app.use('/api/auth/login', rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 30,
+    standardHeaders: true
+}));
 app.use('/api/auth', authRoutes);
 
 // Everything below requires a valid JWT + admin role

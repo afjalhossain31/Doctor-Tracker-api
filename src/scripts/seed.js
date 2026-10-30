@@ -34,7 +34,9 @@ const doctors = await Doctor.insertMany(
   }))
 );
 
-const patients = Array.from({ length: 140 }, () => ({
+const patients = Array.from({
+  length: 140
+}, () => ({
   name: `${pick(first)} ${pick(last)}`,
   age: 3 + Math.floor(Math.random() * 85),
   gender: pick(['Male', 'Female', 'Other']),

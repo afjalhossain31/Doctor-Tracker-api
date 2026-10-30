@@ -26,10 +26,22 @@ export function applyDateRange(filter, from, to, field = 'createdAt') {
 export function pageParams(query, defaultLimit = 10) {
   const page = Math.max(1, parseInt(query.page) || 1);
   const limit = Math.min(50, Math.max(1, parseInt(query.limit) || defaultLimit));
-  return { page, limit, skip: (page - 1) * limit };
+  return {
+    page,
+    limit,
+    skip: (page - 1) * limit
+  };
 }
 
-export const paginated = (items, total, { page, limit }) => ({
+export const paginated = (items, total, {
+  page,
+  limit
+}) => ({
   items,
-  pagination: { page, limit, total, pages: Math.max(1, Math.ceil(total / limit)) },
+  pagination: {
+    page,
+    limit,
+    total,
+    pages: Math.max(1, Math.ceil(total / limit))
+  },
 });
