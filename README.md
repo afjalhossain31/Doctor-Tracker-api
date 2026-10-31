@@ -4,8 +4,8 @@ REST API for **Doctor Tracker**, a secure admin portal for managing doctors and 
 
 - **Frontend repo:** https://github.com/afjalhossain31/Doctor-Tracker-web
 - **Backend repo:** https://github.com/afjalhossain31/Doctor-Tracker-api
-- **Live API:** `<paste Render URL>` (health check: `/api/health`)
-- **Live frontend:** `<paste Vercel URL>`
+- **Live API:** `https://doctor-tracker-api-backend.vercel.app` (health check: `/api/health`)
+- **Live frontend:** `https://doctor-tracker-website.vercel.app`
 - **Demo login:** `admin@doctortracker.com` / `Admin@123`
 
 ## Tech stack
